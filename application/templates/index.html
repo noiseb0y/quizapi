@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jeopardiser!</title>
+</head>
+
+<body onload="getQuestion();">
+    <h4 id="question"></h4>
+    <h4 id="answer" hidden="true"> </h4>
+    <p id="questionID" hidden="true"> </p>
+    <br>
+    <a href="#" onclick="showAnswer()">show answer</a>
+    <a href="#" onclick="getQuestion()">another question!</a>
+    <br><br>
+    <a id="reportQuestion" href="#" onclick="reportQuestion()">report shit question</a>
+
+</body>
+
+<script>
+    async function getQuestion() {
+        resetStuff()
+        fetch("/question")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("question").innerText = (data.question.question).toString().toLowerCase()
+                document.getElementById("answer").innerText = data.question.answer.toString().toLowerCase()
+                document.getElementById("questionID").innerText = data.question.questionId
+            })
+            .catch(console.error())
+        }
+
+    function showAnswer() {
+        document.getElementById("answer").hidden = false
+    }
+    
+    function resetStuff() {
+        document.getElementById("answer").hidden = true //make sure to hide the answer if a new question is requested. 
+        document.getElementById("reportQuestion").innerText = "report shit question"
+    }
+
+    async function reportQuestion() {
+        fetch("/report_question/"+document.getElementById("questionID").innerText)
+            .then(function () {
+                console.log("reported question")
+                document.getElementById("reportQuestion").innerText = "reported!"
+            })
+            .catch(console.error())
+        }
+
+</script>
+
+</html>
