@@ -1,4 +1,4 @@
-from quizapi import __version__
+from application import __version__
 
 
 def test_version():

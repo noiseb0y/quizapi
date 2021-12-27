@@ -1,10 +1,8 @@
 import redis
 import json
-import config
 
 def test_connection(r: redis.Redis) -> Exception:
     try:
-        print("testing connection...")
         r.ping()
         print("connection OK")
     except:
@@ -20,6 +18,7 @@ def is_db_populated(r: redis.Redis) -> Exception:
 def generate_data_for_redis():
     import csv
     import uuid
+    import config
     
     rows = []
     with open(config.QUESTION_PATH, "r") as csv_file:

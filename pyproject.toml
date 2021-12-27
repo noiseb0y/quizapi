@@ -8,6 +8,7 @@ authors = ["bhavin-t <bhavin.tailor@ravelin.com>"]
 python = "^3.9"
 Flask = "^2.0.2"
 redis = "^4.0.2"
+fakeredis = "^1.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
