@@ -13,20 +13,30 @@
     <br>
     <a href="#" onclick="showAnswer()">show answer</a>
     <a href="#" onclick="getQuestion()">another question!</a>
+    <a id="questionLink" href=""></a>
     <br><br>
     <a id="reportQuestion" href="#" onclick="reportQuestion()">report shit question</a>
 
 </body>
 
 <script>
+    function displayQuestion() {
+        if (document.getElementById("questionByLink") === ""){
+            getQuestion()
+        }
+    }
+
     async function getQuestion() {
         resetStuff()
         fetch("/question")
             .then(response => response.json())
             .then(data => {
-                document.getElementById("question").innerText = (data.question.question).toString().toLowerCase()
+                document.getElementById("question").innerText = data.question.question.toString().toLowerCase()
                 document.getElementById("answer").innerText = data.question.answer.toString().toLowerCase()
                 document.getElementById("questionID").innerText = data.question.questionId
+                var ql = document.getElementById("questionLink")
+                ql.href = "/question/"+data.question.questionId
+                ql.innerText = "link to question!"
             })
             .catch(console.error())
         }

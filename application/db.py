@@ -27,7 +27,7 @@ def generate_data_for_redis():
             rows.append(json.dumps(
                 {
                     "question": {
-                        "questionId": uuid.uuid4(),
+                        "questionId": str(uuid.uuid4()),
                         "category" :row["category"], 
                         "value": row["value"], 
                         "question": row["question"], 
@@ -62,9 +62,8 @@ def get_random_question(r: redis.Redis) -> str:
         else:
             return questionResp
         
-def get_question_by_id(question_id: str) -> str:
-    #TODO: all of this
-    return question_id
+def get_question_by_id(r: redis.Redis, question_id: str) -> str:
+    return r.get(question_id)
         
 def report_shit_question(r: redis.Redis, question_id: str):
     resp = r.get(question_id)
