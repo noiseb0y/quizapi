@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
 import db
 import init
 
@@ -14,7 +14,7 @@ def question():
 
 @route_blueprint.route("/question/<questionId>")
 def question_by_id(questionId):
-    return questionId
+    return db.get_question_by_id(init.r, questionId)
 
 @route_blueprint.route("/report_question/<questionId>")
 def report_shit_question(questionId):
@@ -24,3 +24,5 @@ def report_shit_question(questionId):
 def healthcheck():
     return "pong"
 
+def resource_not_found(e):
+    return jsonify(error="cannot be found"), 404
